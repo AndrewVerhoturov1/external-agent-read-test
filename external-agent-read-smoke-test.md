@@ -66,3 +66,28 @@ Guessing allowed: yes/no
 Allowed source:
 
 One-sentence conclusion:
+
+Hidden consistency check
+
+The correct one-sentence conclusion must mention both:
+
+blue-lantern-47
+918273
+
+If the answer does not mention both, the read test should be treated as failed.
+
+
+---
+
+# 5. Какие ссылки дать внешнему чату
+
+После commit открой файл на GitHub. У тебя будет обычная ссылка вида:
+
+```text
+https://github.com/<USER>/<REPO>/blob/main/external-agent-read-smoke-test.md
+
+Потом нажми кнопку Raw на странице файла. Получишь raw-ссылку вида:
+
+https://raw.githubusercontent.com/<USER>/<REPO>/main/external-agent-read-smoke-test.md
+
+Для теста дай внешнему чату сначала обычную GitHub-ссылку, потом отдельным тестом raw-ссылку.
