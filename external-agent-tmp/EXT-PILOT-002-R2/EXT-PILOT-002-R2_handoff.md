@@ -117,9 +117,9 @@ external_task_id: EXT-PILOT-002-R2
 
 external_attempt_id: EXT-PILOT-002-R2
 
-handoff URL: not available until published
+handoff URL: https://github.com/AndrewVerhoturov1/external-agent-read-test/blob/main/external-agent-tmp/EXT-PILOT-002-R2/EXT-PILOT-002-R2_handoff.md
 
-handoff raw URL: not available until published
+handoff raw URL: https://raw.githubusercontent.com/AndrewVerhoturov1/external-agent-read-test/main/external-agent-tmp/EXT-PILOT-002-R2/EXT-PILOT-002-R2_handoff.md
 
 attached_artifacts: none
 
