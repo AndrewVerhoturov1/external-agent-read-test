@@ -73,3 +73,45 @@ External Web Chat
 ## Recorder requirement
 
 В конце ответа обязательно добавь секцию `## Recorder Payload` с готовым payload для `Kilo Recorder` по контракту production-like external route.
+
+Используй именно такой формат, без пропуска полей и без ручной сборки человеком:
+
+```md
+## Recorder Payload
+
+# Recorder Package: EXT-0001 / EXT-0001-A1
+
+## external_task_id
+
+EXT-0001
+
+## external_attempt_id
+
+EXT-0001-A1
+
+## response_path
+
+D:/Codex+Kilocode/projects/sword-of-rome-web/.ai/external_chats/responses/2026-05-16_sword_of_rome_research.md
+
+## published_links
+
+- static_manual_blob: https://github.com/AndrewVerhoturov1/external-agent-read-test/blob/main/external_agent_static_manual.md
+- static_manual_raw: https://raw.githubusercontent.com/AndrewVerhoturov1/external-agent-read-test/main/external_agent_static_manual.md
+- static_manual_version: EA-STATIC-2026-05-14-V2
+- handoff_blob: https://github.com/AndrewVerhoturov1/external-agent-read-test/blob/main/external-agent-tmp/EXT-0001/EXT-0001-A1_handoff.md
+- handoff_raw: https://raw.githubusercontent.com/AndrewVerhoturov1/external-agent-read-test/main/external-agent-tmp/EXT-0001/EXT-0001-A1_handoff.md
+
+## recording_mode
+
+response-only
+
+## allowed_writes
+
+- D:/Codex+Kilocode/projects/sword-of-rome-web/.ai/external_chats/responses/2026-05-16_sword_of_rome_research.md
+
+## raw_response
+
+<сюда нужно вставить полный основной markdown-ответ целиком, без секции `## Recorder Payload`, без сокращений и без пересказа>
+```
+
+Если payload неполный или поле `raw_response` отсутствует, такой ответ считается непригодным для `Kilo Recorder`.
