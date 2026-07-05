@@ -1,4 +1,0 @@
-external agent smoke test
-created: 2026-07-05
-updated: yes after permission approval
-purpose: GitHub connector write/read/update/delete smoke
