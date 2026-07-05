@@ -1,0 +1,1 @@
+Trigger GitHub Actions smoke check for tactical MVP.
