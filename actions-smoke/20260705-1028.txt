@@ -1,0 +1,2 @@
+actions smoke trigger
+created: 2026-07-05
