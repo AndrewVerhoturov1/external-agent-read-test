@@ -1,0 +1,54 @@
+{
+  "name": "Занять дом у лесополосы",
+  "map": {
+    "width": 1200,
+    "height": 800,
+    "terrain": [
+      { "id": "field", "type": "field", "name": "открытое поле", "x": 0, "y": 0, "w": 1200, "h": 800, "cover": 0.05, "height": 10 },
+      { "id": "forest_left", "type": "forest", "name": "лесополоса", "x": 85, "y": 120, "w": 275, "h": 560, "cover": 0.42, "height": 12 },
+      { "id": "road", "type": "road", "name": "дорога", "x": 0, "y": 520, "w": 1200, "h": 56, "cover": 0.0, "height": 10 },
+      { "id": "house", "type": "building", "name": "дом", "x": 790, "y": 315, "w": 110, "h": 82, "cover": 0.72, "height": 12, "blocksLos": true },
+      { "id": "barn", "type": "building", "name": "сарай", "x": 905, "y": 420, "w": 70, "h": 55, "cover": 0.62, "height": 11, "blocksLos": true },
+      { "id": "trench", "type": "trench", "name": "окоп", "points": [[690,430],[755,455],[840,438],[910,458]], "radius": 18, "cover": 0.82, "height": 10 },
+      { "id": "hill", "type": "hill", "name": "высота", "x": 495, "y": 80, "w": 250, "h": 185, "cover": 0.16, "height": 18 },
+      { "id": "ravine", "type": "ravine", "name": "низина", "x": 420, "y": 610, "w": 260, "h": 85, "cover": 0.25, "height": 6 },
+      { "id": "wall", "type": "wall", "name": "каменная стенка", "x": 705, "y": 505, "w": 210, "h": 18, "cover": 0.52, "height": 10 }
+    ],
+    "objectives": [
+      { "id": "house_objective", "name": "занять дом", "x": 845, "y": 360, "radius": 55 }
+    ]
+  },
+  "weapons": {
+    "rifle": { "name": "винтовка", "range": 360, "fireRate": 0.55, "accuracy": 0.22, "suppressionPower": 8, "damagePower": 0.12, "arc": 160 },
+    "lmg": { "name": "ручной пулемёт", "range": 480, "fireRate": 0.8, "accuracy": 0.18, "suppressionPower": 15, "damagePower": 0.10, "arc": 130 },
+    "enemy_mg": { "name": "станковый пулемёт", "range": 620, "fireRate": 1.0, "accuracy": 0.2, "suppressionPower": 28, "damagePower": 0.13, "arc": 120 }
+  },
+  "squads": [
+    {
+      "id": "blue_squad_1",
+      "side": "blue",
+      "name": "1-е отделение",
+      "leaderId": "b1",
+      "soldiers": [
+        { "id": "b1", "role": "squad_leader", "weapon": "rifle", "x": 135, "y": 388, "facing": 0 },
+        { "id": "b2", "role": "rifleman", "weapon": "rifle", "x": 105, "y": 410, "facing": 0 },
+        { "id": "b3", "role": "rifleman", "weapon": "rifle", "x": 115, "y": 438, "facing": 0 },
+        { "id": "b4", "role": "rifleman", "weapon": "rifle", "x": 145, "y": 432, "facing": 0 },
+        { "id": "b5", "role": "rifleman", "weapon": "rifle", "x": 160, "y": 407, "facing": 0 },
+        { "id": "b6", "role": "lmg", "weapon": "lmg", "x": 124, "y": 462, "facing": 0 },
+        { "id": "b7", "role": "rifleman", "weapon": "rifle", "x": 172, "y": 448, "facing": 0 }
+      ]
+    },
+    {
+      "id": "red_group_1",
+      "side": "red",
+      "name": "вражеская огневая группа",
+      "leaderId": "r1",
+      "soldiers": [
+        { "id": "r1", "role": "enemy_mg", "weapon": "enemy_mg", "x": 1005, "y": 285, "facing": 3.0 },
+        { "id": "r2", "role": "rifleman", "weapon": "rifle", "x": 975, "y": 325, "facing": 3.0 },
+        { "id": "r3", "role": "rifleman", "weapon": "rifle", "x": 1035, "y": 335, "facing": 3.0 }
+      ]
+    }
+  ]
+}
