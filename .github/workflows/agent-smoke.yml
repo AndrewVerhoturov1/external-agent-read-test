@@ -1,0 +1,13 @@
+name: Agent Smoke
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print smoke marker
+        run: echo "agent smoke ok"
