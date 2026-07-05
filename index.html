@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Top-Down Tactical Command MVP</title>
+  <link rel="stylesheet" href="./src/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="title-block">
+      <h1>Top-Down Tactical Command MVP</h1>
+      <p>Сценарий: «Занять дом у лесополосы»</p>
+    </div>
+    <div class="controls">
+      <button id="runPause">Пуск</button>
+      <button id="stepBtn">Шаг</button>
+      <button id="resetBtn">Сброс</button>
+      <span class="divider"></span>
+      <button data-order="move" class="order active">Move</button>
+      <button data-order="cover" class="order">Take Cover</button>
+      <button data-order="suppress" class="order">Suppress</button>
+      <button data-order="face" class="order">Face</button>
+      <span class="divider"></span>
+      <button data-speed="fast" class="speed">Быстро</button>
+      <button data-speed="normal" class="speed active">Обычно</button>
+      <button data-speed="cautious" class="speed">Осторожно</button>
+    </div>
+    <div class="layers" aria-label="Слои карты">
+      <button data-layer="normal" class="layer active">Обычный</button>
+      <button data-layer="cover" class="layer">Укрытия</button>
+      <button data-layer="height" class="layer">Высоты</button>
+      <button data-layer="visibility" class="layer">Видимость</button>
+      <button data-layer="fire" class="layer">Огонь</button>
+      <button data-layer="suppression" class="layer">Подавление</button>
+      <button data-layer="orders" class="layer">Приказы</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="map-wrap">
+      <canvas id="gameCanvas" width="1200" height="800"></canvas>
+      <div class="hud">
+        <span id="tickInfo">tick 0</span>
+        <span id="mouseInfo">x: -, y: -</span>
+        <span id="selectedInfo">выбрано: отделение</span>
+      </div>
+      <div class="legend">
+        <strong>Легенда</strong>
+        <span><i class="dot blue"></i> свой боец</span>
+        <span><i class="dot red"></i> враг</span>
+        <span>○ стоит / движется</span>
+        <span>⬭ залёг</span>
+        <span>жёлтое кольцо — подавлен</span>
+        <span>красное кольцо — pinned</span>
+        <span>▵ командир</span>
+        <span>▱ пулемётчик</span>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <section>
+        <h2>Выбранное</h2>
+        <div id="details">Загрузка...</div>
+      </section>
+      <section>
+        <h2>Объяснение поведения</h2>
+        <div id="explain">Выберите отделение или бойца.</div>
+      </section>
+      <section>
+        <h2>Как проверить</h2>
+        <ol>
+          <li>Нажмите <b>Move</b> и кликните по дому напрямую через поле.</li>
+          <li>Смотрите, как растёт подавление и бойцы ложатся.</li>
+          <li>Нажмите <b>Сброс</b>, затем ведите отделение через лесополосу.</li>
+          <li>Переключайте слои «Укрытия», «Огонь», «Подавление».</li>
+        </ol>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="event-log">
+    <h2>Журнал событий</h2>
+    <div id="eventLog"></div>
+  </footer>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
