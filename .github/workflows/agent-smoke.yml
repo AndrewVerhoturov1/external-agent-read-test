@@ -9,5 +9,26 @@ jobs:
   smoke:
     runs-on: ubuntu-latest
     steps:
-      - name: Print smoke marker
-        run: echo "agent smoke ok"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check src/main.js
+          node --check src/sim.js
+          node --check src/render.js
+          node --check src/input.js
+          node --check src/terrain.js
+          node --check src/ui.js
+          node --check src/ai.js
+          node --check src/orders.js
+      - name: Check scenario JSON
+        run: python -m json.tool data/scenario_01.json > /tmp/scenario.json
+      - name: Check required files
+        run: |
+          test -f index.html
+          test -f README.md
+          test -f src/styles.css
+          test -f data/scenario_01.json
+          grep -q "Top-Down Tactical Command MVP" index.html
