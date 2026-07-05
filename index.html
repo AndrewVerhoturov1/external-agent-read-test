@@ -1,89 +1,30 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Top-Down Tactical Command MVP</title>
-  <link rel="stylesheet" href="./src/styles.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2D Tactical MVP</title>
+<style>
+body{margin:0;background:#171b16;color:#e7eadf;font-family:system-ui,Segoe UI,Arial,sans-serif}header{padding:12px;background:#151a14;border-bottom:1px solid #596251}h1{margin:0;font-size:22px}p{color:#aeb7a7}.bar{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}button{background:#2a3328;color:#e7eadf;border:1px solid #68725d;border-radius:6px;padding:8px 10px}.on{background:#49613d}.wrap{display:grid;grid-template-columns:minmax(600px,1fr)320px;gap:10px;padding:10px}canvas{max-width:100%;height:auto;background:#768a49;border:1px solid #596251}.panel,.log{background:#20271f;border:1px solid #596251;border-radius:8px;padding:12px;white-space:pre-line}.log{margin:0 10px 10px;font-family:Consolas,monospace;font-size:13px}@media(max-width:900px){.wrap{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="title-block">
-      <h1>Top-Down Tactical Command MVP</h1>
-      <p>Сценарий: «Занять дом у лесополосы»</p>
-    </div>
-    <div class="controls">
-      <button id="runPause">Пуск</button>
-      <button id="stepBtn">Шаг</button>
-      <button id="resetBtn">Сброс</button>
-      <span class="divider"></span>
-      <button data-order="move" class="order active">Move</button>
-      <button data-order="cover" class="order">Take Cover</button>
-      <button data-order="suppress" class="order">Suppress</button>
-      <button data-order="face" class="order">Face</button>
-      <span class="divider"></span>
-      <button data-speed="fast" class="speed">Быстро</button>
-      <button data-speed="normal" class="speed active">Обычно</button>
-      <button data-speed="cautious" class="speed">Осторожно</button>
-    </div>
-    <div class="layers" aria-label="Слои карты">
-      <button data-layer="normal" class="layer active">Обычный</button>
-      <button data-layer="cover" class="layer">Укрытия</button>
-      <button data-layer="height" class="layer">Высоты</button>
-      <button data-layer="visibility" class="layer">Видимость</button>
-      <button data-layer="fire" class="layer">Огонь</button>
-      <button data-layer="suppression" class="layer">Подавление</button>
-      <button data-layer="orders" class="layer">Приказы</button>
-    </div>
-  </header>
-
-  <main class="layout">
-    <section class="map-wrap">
-      <canvas id="gameCanvas" width="1200" height="800"></canvas>
-      <div class="hud">
-        <span id="tickInfo">tick 0</span>
-        <span id="mouseInfo">x: -, y: -</span>
-        <span id="selectedInfo">выбрано: отделение</span>
-      </div>
-      <div class="legend">
-        <strong>Легенда</strong>
-        <span><i class="dot blue"></i> свой боец</span>
-        <span><i class="dot red"></i> враг</span>
-        <span>○ стоит / движется</span>
-        <span>⬭ залёг</span>
-        <span>жёлтое кольцо — подавлен</span>
-        <span>красное кольцо — pinned</span>
-        <span>▵ командир</span>
-        <span>▱ пулемётчик</span>
-      </div>
-    </section>
-
-    <aside class="panel">
-      <section>
-        <h2>Выбранное</h2>
-        <div id="details">Загрузка...</div>
-      </section>
-      <section>
-        <h2>Объяснение поведения</h2>
-        <div id="explain">Выберите отделение или бойца.</div>
-      </section>
-      <section>
-        <h2>Как проверить</h2>
-        <ol>
-          <li>Нажмите <b>Move</b> и кликните по дому напрямую через поле.</li>
-          <li>Смотрите, как растёт подавление и бойцы ложатся.</li>
-          <li>Нажмите <b>Сброс</b>, затем ведите отделение через лесополосу.</li>
-          <li>Переключайте слои «Укрытия», «Огонь», «Подавление».</li>
-        </ol>
-      </section>
-    </aside>
-  </main>
-
-  <footer class="event-log">
-    <h2>Журнал событий</h2>
-    <div id="eventLog"></div>
-  </footer>
-
-  <script type="module" src="./src/main.js"></script>
+<header><h1>Top-Down Tactical Command MVP</h1><p>Рабочая аварийная версия: один HTML-файл, без внешних модулей. Если ты видишь карту — GitHub Pages работает.</p><div class="bar"><button id="run">Пуск</button><button id="step">Шаг</button><button id="reset">Сброс</button><button id="move" class="on">Move</button><button id="cover">Take Cover</button><button id="normal" class="on">Обычно</button><button id="slow">Осторожно</button><button id="layer">Слой: обычный</button></div></header>
+<div class="wrap"><canvas id="c" width="1200" height="800"></canvas><aside class="panel"><h2>Состояние</h2><div id="info">Загрузка...</div><h2>Как проверить</h2>1. Нажми Move.
+2. Кликни по дому справа.
+3. Нажми Пуск.
+4. Смотри, как бойцы идут, ложатся под давлением и ищут укрытия.
+5. Нажимай кнопку слоя.</aside></div><div class="log" id="log"></div>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');let run=false,t=0,mode='move',slow=false,lay=0,logs=[];
+const zones=[['лес',85,120,275,560,.42,'#335a34'],['дорога',0,520,1200,56,0,'#8b7c61'],['дом',790,315,110,82,.72,'#6f6254'],['сарай',905,420,70,55,.62,'#6f6254'],['высота',495,80,250,185,.16,'#9a934f'],['низина',420,610,260,85,.25,'#556b55'],['стенка',705,505,210,18,.52,'#8a8a7a']];
+let men=[];function start(){t=0;logs=['00:00 — сценарий загружен'];men=[m('b1','b',135,388,'командир'),m('b2','b',105,410,'стрелок'),m('b3','b',115,438,'стрелок'),m('b4','b',145,432,'стрелок'),m('b5','b',160,407,'стрелок'),m('b6','b',124,462,'ручной пулемёт'),m('b7','b',172,448,'стрелок'),m('r1','r',1005,285,'пулемёт'),m('r2','r',975,325,'стрелок'),m('r3','r',1035,335,'стрелок')];draw();ui()}
+function m(id,side,px,py,role){return{id,side,x:px,y:py,role,s:0,face:side==='r'?3.14:0,tx:null,ty:null,down:false,msg:'готов'}}function d(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}function cov(px,py){let v=.05,n='поле';for(const z of zones)if(px>=z[1]&&py>=z[2]&&px<=z[1]+z[3]&&py<=z[2]+z[4]){v=Math.max(v,z[5]);n=z[0]}return{v,n}}function log(a){logs.unshift(a);logs=logs.slice(0,30)}function tm(){let s=Math.floor(t);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function tick(){t+=.05;for(const a of men){a.s=Math.max(0,a.s-.35);if(a.s<35)a.down=false}for(const r of men.filter(a=>a.side==='r')){let b=men.filter(a=>a.side==='b').sort((p,q)=>d(r,p)-d(r,q))[0];if(b&&d(r,b)<620){r.face=Math.atan2(b.y-r.y,b.x-r.x);let c=cov(b.x,b.y).v;b.s=Math.min(100,b.s+(r.role==='пулемёт'?1.9:.55)*(1-c*.65));if(b.s>38){b.down=true;b.msg='рядом плотная очередь, подавление '+Math.round(b.s)+', боец залёг'}if(b.s>72)b.msg='сильное давление: боец прижат и почти не двигается'}}for(const b of men.filter(a=>a.side==='b'&&a.tx)){if(b.s>72){b.down=true;seek(b,.5);continue}let sp=slow?1.1:2.0;if(b.s>42){b.down=true;seek(b,.8);continue}let dx=b.tx-b.x,dy=b.ty-b.y,di=Math.hypot(dx,dy);if(di>3){b.x+=dx/di*sp;b.y+=dy/di*sp;b.face=Math.atan2(dy,dx);b.msg='выполняет приказ, местность: '+cov(b.x,b.y).n+', укрытие '+Math.round(cov(b.x,b.y).v*100)+'%'}}draw();ui()}
+function seek(b,sp){let best=null;for(const z of zones){if(z[5]<.3)continue;let px=Math.max(z[1],Math.min(z[1]+z[3],b.x)),py=Math.max(z[2],Math.min(z[2]+z[4],b.y)),di=Math.hypot(px-b.x,py-b.y);if(di<110&&(!best||di<best.di))best={x:px,y:py,di,n:z[0]}}if(best&&best.di>4){let dx=best.x-b.x,dy=best.y-b.y;b.x+=dx/best.di*sp;b.y+=dy/best.di*sp;b.msg+='; смещается к укрытию: '+best.n}}
+function draw(){x.clearRect(0,0,1200,800);x.fillStyle='#768a49';x.fillRect(0,0,1200,800);for(const z of zones){x.fillStyle=lay?`rgba(230,230,100,${.1+z[5]})`:z[6];x.fillRect(z[1],z[2],z[3],z[4]);x.strokeStyle='#222';x.strokeRect(z[1],z[2],z[3],z[4]);x.fillStyle='#eee';x.font='14px sans-serif';x.fillText(z[0],z[1]+6,z[2]+18)}x.strokeStyle='#fff';x.setLineDash([8,6]);x.beginPath();x.arc(845,360,55,0,7);x.stroke();x.setLineDash([]);for(const r of men.filter(a=>a.side==='r')){x.fillStyle='rgba(255,70,70,.13)';x.beginPath();x.moveTo(r.x,r.y);x.arc(r.x,r.y,520,r.face-.45,r.face+.45);x.fill()}for(const a of men){x.save();x.translate(a.x,a.y);x.rotate(a.face);x.fillStyle=a.side==='b'?'#58a6ff':'#ff6b5f';x.strokeStyle='#101410';x.lineWidth=2;x.beginPath();a.down?x.ellipse(0,0,12,6,0,0,7):x.arc(0,0,9,0,7);x.fill();x.stroke();x.strokeStyle='#111';x.lineWidth=a.role.includes('пулем')?4:2;x.beginPath();x.moveTo(6,0);x.lineTo(a.role.includes('пулем')?25:18,0);x.stroke();x.restore();if(a.role==='командир'){x.fillStyle='#fff7a3';x.beginPath();x.moveTo(a.x,a.y-24);x.lineTo(a.x-7,a.y-10);x.lineTo(a.x+7,a.y-10);x.fill()}if(a.s>38){x.strokeStyle=a.s>72?'#ff3333':'#ffd166';x.lineWidth=a.s>72?4:3;x.beginPath();x.arc(a.x,a.y,15,0,7);x.stroke()}if(a.tx){x.strokeStyle='#f3f0a0';x.setLineDash([6,5]);x.beginPath();x.moveTo(a.x,a.y);x.lineTo(a.tx,a.ty);x.stroke();x.setLineDash([])}}}
+function ui(){let b=men.filter(a=>a.side==='b'),avg=Math.round(b.reduce((q,a)=>q+a.s,0)/b.length),down=b.filter(a=>a.down).length;document.getElementById('info').textContent='Время: '+tm()+'\nПодавление отделения: '+avg+'\nЗалегли: '+down+'/'+b.length+'\nПриказ: '+(b[0].tx?'есть':'нет')+'\nПричина: '+(avg>70?'плотный огонь справа, отделение прижато':down?'часть бойцов залегла и ищет укрытие':'отделение выполняет приказ или ждёт')+'\n\nПоследний боец: '+b[0].msg;document.getElementById('log').textContent=logs.join('\n')}
+c.addEventListener('click',e=>{let r=c.getBoundingClientRect(),px=(e.clientX-r.left)*1200/r.width,py=(e.clientY-r.top)*800/r.height;let i=0;for(const b of men.filter(a=>a.side==='b')){b.tx=px+(i%3)*22;b.ty=py+Math.floor(i/3)*22;b.msg='получил приказ '+mode;i++}log(tm()+' — отделение получило приказ '+mode)});document.getElementById('run').onclick=()=>{run=!run;document.getElementById('run').textContent=run?'Пауза':'Пуск'};document.getElementById('step').onclick=()=>tick();document.getElementById('reset').onclick=()=>{run=false;document.getElementById('run').textContent='Пуск';start()};document.getElementById('move').onclick=()=>{mode='move';document.getElementById('move').classList.add('on');document.getElementById('cover').classList.remove('on')};document.getElementById('cover').onclick=()=>{mode='cover';document.getElementById('cover').classList.add('on');document.getElementById('move').classList.remove('on')};document.getElementById('normal').onclick=()=>{slow=false;normal.classList.add('on');document.getElementById('slow').classList.remove('on')};document.getElementById('slow').onclick=()=>{slow=true;slow.classList.add('on');document.getElementById('normal').classList.remove('on')};document.getElementById('layer').onclick=()=>{lay=(lay+1)%2;document.getElementById('layer').textContent=lay?'Слой: укрытия':'Слой: обычный';draw()};let last=performance.now();function loop(n){if(run&&n-last>50){tick();last=n}requestAnimationFrame(loop)}start();requestAnimationFrame(loop);
+</script>
 </body>
 </html>
